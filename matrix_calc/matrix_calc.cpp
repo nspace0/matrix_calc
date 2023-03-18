@@ -1,4 +1,5 @@
 ﻿#include <iostream>
+#include "conio.h"
 using namespace std;
 int action, m0, n0, m1, n1;
 
@@ -74,6 +75,62 @@ void scalarMultiplication(int matrixA[3][3]) {
 		}
 	}
 }
+void transposeMatrix(int matrixA[3][3]) {
+	for (int i = 0; i < 3; i++)
+	{
+		for (int j = 0; j < 3; j++)
+		{
+			matrixC[j][i] = matrixA[i][j];
+		}
+	}
+}
+bool isIdentityMatrix(int matrixA[3][3]) {
+	for (int i = 0; i < 3; i++) {
+		for (int j = 0; j < 3; j++) {
+			if (i = j) {
+				if (matrixA[i][j] != 1) {
+					return false;
+				}
+			}
+			else {
+				if (matrixA[i][j] != 0) {
+					return false;
+				}
+			}
+		}
+	}
+	return true;
+}
+bool isDiagonalMatrix(int matrixA[3][3]) {
+	for (int i = 0; i < 3; i++) {
+		for (int j = 0; j < 3; j++) {
+			if (i == j) {
+				continue;
+			}
+			else {
+				if (matrixA[i][j] != 0)
+				{
+					return false;
+				}
+			}
+		}
+	}
+	return true;
+}
+bool isSymmetric(int matrixA[3][3]) {
+	transposeMatrix(matrixA);
+
+	for (int i = 0; i < 3; i++)
+	{
+		for (int j = 0; j < 3; j++) {
+			if (matrixC[i][j] != matrixA[i][j]) {
+				return false;
+			}
+		}
+	}
+	return true;
+}
+
 
 
 char menu() {
@@ -86,7 +143,7 @@ char menu() {
 	cout << "3. Умножение матриц. \n";
 	cout << "4. Умножение матрицы на число. \n";
 	cout << "5. Транспонирование матриц. \n";
-	cout << "6. Нахождение обратной матрицы. \n";
+	cout << "6. Свойства матрицы. \n";
 	cout << "0. Exit.\n";
 
 	cin >> action;
@@ -124,21 +181,41 @@ int main()
 		break;
 
 	case 5:
-		cout << "1";
+		transposeMatrix(matrixA);
+		cout << " Transpose Matrix \n";
+		print(matrixC);
 		break;
 
 	case 6:
-		cout << "Умножение матрицы А на матрицу В определено, когда число столбцов первой матрицы равно числу строк второй.\n";
-		break;
+		if (isIdentityMatrix(matrixA)) {
+			cout << " Identity matrix \n";
+		}
+		else
+		{
+			cout << " Not identity matrix \n";
+		}
 
-	case 7:
-		cout << "1";
+		if (isDiagonalMatrix(matrixA)) {
+			cout << " Diagonal Matrix \n";
+		}
+		else {
+			cout << " Not diagonal matrix \n";
+		}
+
+		if (isSymmetric(matrixA)) {
+			cout << " Symmetric matrix \n";
+		}
+		else {
+			cout << " Not symmetric matrix " << endl;
+		}
 		break;
 
 	default:
 		cout << "Пон\n";
 		break;
 	}
+	cout << "Press Any key to continue...";
+	_getch();
 
 
 
